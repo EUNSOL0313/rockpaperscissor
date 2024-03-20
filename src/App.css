@@ -1,12 +1,117 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+.main_title {
+   font-family: 'Bagel Fat One', system-ui;
+   font-size: 5em;
+   font-weight: 300;
+   text-align: center;
+   margin-top: 1em;
+   max-width: 100%;
+}
 .box {
+   width: 60em;
    border: 1px solid black;
-   width: 500px;
+   font-family: 'Bagel Fat One', system-ui;
+   font-weight: 200;
+   font-style: normal;
 }
 
 .item-img {
-   width: 400px;
+   max-width: 80%;
+   height: 350px;
 }
+
 .main {
    display: flex;
    justify-content: center;
+}
+
+.main > div {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+   margin: 5em 1em 3em 1em;
+   padding: 0.5rem;
+}
+
+.Win {
+   border: 8px dotted rgb(76, 168, 76);
+   border-radius: 15px;
+   color: rgb(76, 168, 76);
+}
+.Lose {
+   border: 8px dotted rgb(255, 95, 80);
+   border-radius: 15px;
+   color: rgb(255, 95, 80);
+}
+.Tie {
+   border: 8px dotted black;
+   border-radius: 15px;
+   color: black;
+}
+
+.main button {
+   width: 6em;
+   height: 6em;
+   background-color: #fff;
+   margin: 1em;
+   border: 1px solid gray;
+   border-radius: 10px;
+}
+.main button:hover {
+   background-color: gray;
+}
+.main button img {
+   width: 5em;
+   height: 5em;
+   object-fit: contain;
+   background-color: none;
+}
+
+@media (max-width: 726px) {
+   .main_title {
+      font-size: 4em;
+   }
+   .box {
+      width: 50em;
+      height: 350px;
+   }
+   .box img {
+      height: 200px;
+      width: 100%;
+   }
+   .main button {
+      width: 4em;
+      height: 4em;
+   }
+   .main button img {
+      width: 3em;
+      height: 3em;
+   }
+}
+@media (max-width: 449px) {
+   .main_title {
+      font-size: 3em;
+   }
+   .box {
+      width: 30em;
+      height: 350px;
+   }
+   .box img {
+      height: 150px;
+      width: 100%;
+   }
+   .main button {
+      width: 4em;
+      height: 4em;
+   }
+   .main button img {
+      width: 3em;
+      height: 3em;
+   }
 }

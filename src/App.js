@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import Box from './compnent/Box'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Box from './component/Box'
 import userEvent from '@testing-library/user-event'
 
 //1. 박스 2개 (타이틀,사진, 결과)
@@ -15,7 +16,7 @@ const choice = {
       name: 'Rock',
       img: 'https://blog.kakaocdn.net/dn/pSJwo/btqXJV1lACE/nx5XrxkCLWXh9UsnoS8vbK/img.png',
    },
-   scissors: {
+   scissor: {
       name: 'Scissor',
       img: 'https://blog.kakaocdn.net/dn/HfURw/btqXKvOTNWK/gWTwPXEg9QzSV0ilOuwuak/img.png',
    },
@@ -26,22 +27,76 @@ const choice = {
 }
 function App() {
    const [userSelect, setUserSelect] = useState(null)
+   const [computerSelect, setComputerSelect] = useState(null)
+   const [result, setResult] = useState('')
 
    const play = (userChoice) => {
       setUserSelect(choice[userChoice])
-      console.log('선택됨', userChoice)
+      let computerChoice = randomChoice()
+      //console.log('선택됨', userChoice)
+      setComputerSelect(computerChoice)
+      setResult(judgement(choice[userChoice], computerChoice))
+   }
+   const randomChoice = () => {
+      let itemArray = Object.keys(choice) // Object.keys 객체에 키값만 뽑아서 어레이로 만들어주는 함수다
+      //console.log('item array', itemArray)
+
+      let randomItem = Math.floor(Math.random() * itemArray.length)
+      //console.log('random value', randomItem)
+      let final = itemArray[randomItem]
+      //console.log('final item', final)
+      return choice[final]
+   }
+
+   const judgement = (user, computer) => {
+      console.log('user', user, 'computer', computer)
+
+      //가위바위보 로직
+      //가위를 냈을 때 상대는 가위,바위,보를 낼 수 있다.
+      //가위를 냈을 때 상대가 가위를 내면 무승부, 바위를 내면 상대 승, 보를 내면 상대 패
+      //user == computer tie
+      //user == rock  computer == "scissor" user win
+      //user == "rock" computer == paper user lose
+      //user == scissors computer == paper user win
+      //user == scissors computer == rock user lose
+      //user == paper computer == rock user win
+      //user == paper computer == scissor user lose
+
+      // if (user.name == computer.name) {
+      //    return 'tie'
+      // } else if (user.name == 'Rock') {
+      //    if (computer.name == 'Scissor') {
+      //       return 'win'
+      //    } else {
+      //       return 'lose'
+      //    }
+      // }
+
+      //삼항연산자로 쓰기
+      if (user.name == computer.name) {
+         return 'Tie'
+      } else if (user.name == 'Rock') return computer.name == 'Scissor' ? 'Win' : 'Lose'
+      else if (user.name == 'Scissor') return computer.name == 'Paper' ? 'Win' : 'Lose'
+      else if (user.name == 'Paper') return computer.name == 'Rock' ? 'Win' : 'Lose'
    }
 
    return (
-      <div>
-         <div className="main">
-            <Box title="You" item={userSelect} />
-            {/* <Box title="Computer" /> */}
+      <div className="container">
+         <div className="main_title col"> 가위 바위 보 게임 </div>
+         <div className="main col-12">
+            <Box title="You" item={userSelect} result={result} />
+            <Box title="Computer" item={computerSelect} result={result} />
          </div>
          <div className="main">
-            <button onClick={() => play('scissors')}>가위</button>
-            <button onClick={() => play('rock')}>바위</button>
-            <button onClick={() => play('paper')}>보</button>
+            <button className="btn_scissor" onClick={() => play('scissor')}>
+               <img src="https://blog.kakaocdn.net/dn/HfURw/btqXKvOTNWK/gWTwPXEg9QzSV0ilOuwuak/img.png" alt="가위 이미지"></img>
+            </button>
+            <button className="btn_rock" onClick={() => play('rock')}>
+               <img src="https://blog.kakaocdn.net/dn/pSJwo/btqXJV1lACE/nx5XrxkCLWXh9UsnoS8vbK/img.png" alt="바위 이미지"></img>
+            </button>
+            <button className="btn_paper" onClick={() => play('paper')}>
+               <img src="https://blog.kakaocdn.net/dn/HcCJo/btqXD4Lybq6/kcrH6skAoOD9oAq2QYfBx1/paper.png?attach=1&knm=img.png" alt="보 이미지"></img>
+            </button>
          </div>
       </div>
    )
